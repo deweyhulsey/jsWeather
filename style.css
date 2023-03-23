@@ -69,6 +69,18 @@ p, h1, h2, h3, h4, h5, h6 {
   --bold: 800;
 }
 
+.day {
+  --bg-normal: var(--day-bg-color);
+  --bg-light: var(--day-bg-light);
+  --txt-color: var(--day-txt-color);
+}
+
+.night {
+  --bg-normal: var(--night-bg-color);
+  --bg-light: var(--night-bg-light);
+  --txt-color: var(--night-txt-color);
+}
+
 body {
   font-family: 'Nunito', sans-serif;
   background-color: var(--main-bg-color);
@@ -106,8 +118,14 @@ body {
 }
 
 #forecasts {
+}
+
+.forecast-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100vw 100vw;
+  width: 100vw;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
 }
 
 .forecast {
@@ -116,6 +134,24 @@ body {
   margin: var(--spacing-light);
   border-radius: var(--rounded-radius);
   box-shadow: var(--light-shadow);
+  scroll-snap-align: center;
+  scroll-snap-stop: normal;
+}
+
+.forecast.hourly {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+.forecast.hourly .hour {
+  display: inline-block;
+  text-align: center;;
+  border-radius: var(--rounded-radius);
+  background-color: var(--bg-light);
+  margin: var(--spacing-light);
+  padding: var(--spacing-light);
+
 }
 
 .forecast h3 {
@@ -150,12 +186,12 @@ body {
 
 
 
-.forecast.day::after {
+.forecast.hourly.day::after {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    height: 70px;
-    width: 70px;
+    top: var(--spacing-light);
+    left: -60px;
+    height: 80px;
+    width: 80px;
     content: url('img/svg/sun_with_face_color.svg');
 }
 
@@ -164,12 +200,12 @@ body {
     background-color: var(--night-bg-color);
 }
 
-.forecast.night::after {
+.forecast.hourly.night::after {
     position: absolute;
-    top: -10px;
-    right: -5px;
-    height: 60px;
-    width: 60px;
+    top: var(--spacing-light);
+    left: -60px;
+    height: 80px;
+    width: 80px;
     content: url('img/svg/full_moon_face_color.svg');
 }
 

@@ -4,6 +4,10 @@ async function getJson(url) {
   return await response;
 }
 
+function localeTime(time) {
+  return new Date(time).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
+}
+
 function getLocation() {
   return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
@@ -29,14 +33,14 @@ async function getForecasts() { // forecast, forecastGridData, forecastHourly, f
   return {coords, forecastWeekly, forecastHourly, forecastGridData, forecastOffice, forecastZone};
 }
 
-function showForecast(days) {
+function showForecast(days, hourlyForecast) {
   return days.map(day => {
     const name = day.name;
     const num = day.number;
     const details = day.detailedForecast;
     const short = day.shortForecast;
-    const timeStart = new Date(day.startTime).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'});
-    const timeEnd = new Date(day.endTime).toLocaleString('en-US', {dateStyle: 'short', timeStyle: 'short'});
+    const timeStart = localeTime(day.startTime);
+    const timeEnd = localeTime(day.endTime);
     const isDay = day.isDaytime;
     const icon = day.icon;
     const precipitation = (day.probabilityOfPrecipitation.value === null) ? 0 + '%' : day.probabilityOfPrecipitation.value + '%';
@@ -48,7 +52,10 @@ function showForecast(days) {
     const currentDay = (day.name.split(' '))[0].toLowerCase();
     const nameShort = (currentDay == 'this') ? 'today' : currentDay;
     const classList = nameShort + ((isDay == true) ? ' day' : ' night');
+    const hourly = getHourly(day.startTime, day.endTime, hourlyForecast);
+    console.log(hourly);
     return  `
+          <div class="forecast-container">
             <div id="${num}" class="forecast ${classList}">
               <h3>${name}</h3>
               <div class="conditions">
@@ -63,17 +70,52 @@ function showForecast(days) {
                 <summary>${short}</summary>
                 <p class="details">${details}</p>
               </details>
+            </div>
+            <div id="${num}" class="forecast hourly ${classList}">
+            `+ showHourly(hourly) +`
+            </div>
+          </div>
+            `;
+  }).join('');
+}
 
+function showHourly(hourly) {
+  return hourly.map(hour => {
+    const timeStart = new Date(hour.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const timeEnd = new Date(hour.endTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const shortForecast = hour.shortForecast;
+    const temp = hour.temperature + 'F';
+    return  `
+            <div class="hour">
+              <h3>${temp}</h3>
+              <small>${timeStart}</small>
             </div>
             `;
   }).join('');
+}
+
+function getHourly(dayStartTime, dayEndTime, hourly) {
+  let hourlyForecasts = [];
+  let startingHour = null;
+  hourly.forEach(hour => {
+    if(hour.startTime === dayStartTime) {
+      startingHour = hour.number;
+      hourlyForecasts.push(hour);
+    }
+    if(startingHour !== null && hour.number > startingHour && hour.number <= startingHour + 11  && hour.startTime !== dayEndTime) {
+      hourlyForecasts.push(hour);
+    } else if(hour.startTime == dayEndTime) {
+      startingHour = null;
+    }
+  });
+ return hourlyForecasts;
 }
 
 async function renderPage(target) {
   const forecastData = await getForecasts();
   const forecasts = document.createElement('div');
   forecasts.setAttribute('id', 'forecasts');
-  forecasts.innerHTML = showForecast(forecastData.forecastWeekly.properties.periods);
+  forecasts.innerHTML = showForecast(forecastData.forecastWeekly.properties.periods, forecastData.forecastHourly.properties.periods);
   target.innerHTML = forecasts.outerHTML;
 }
 
