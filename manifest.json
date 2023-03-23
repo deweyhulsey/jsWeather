@@ -8,18 +8,18 @@
         "sizes": "512x512"
       },
       {
-        "src": "assets/img/icons-192.png",
+        "src": "img/icons-192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "assets/img/icons-512.png",
+        "src": "img/icons-512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
-    "id": "/?source=pwa",
-    "start_url": "/?source=pwa",
+    "id": "/",
+    "start_url": "/",
     "background_color": "#6b4e71",
     "display": "fullscreen",
     "scope": "/",
@@ -29,13 +29,13 @@
     "description": "Weather forecast information",
     "screenshots": [
       {
-        "src": "assets/img/screenshot1.png",
+        "src": "img/screenshot1.png",
         "type": "image/png",
         "sizes": "540x720",
         "form_factor": "narrow"
       },
       {
-        "src": "assets/img/screenshot2.png",
+        "src": "img/screenshot2.png",
         "type": "image/png",
         "sizes": "720x540",
         "form_factor": "wide"
