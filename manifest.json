@@ -3,17 +3,17 @@
     "name": "ArcaWeather: Wrangle Your Forecast",
     "icons": [
       {
-        "src": "/img/icons-vector.svg",
+        "src": "img/icons-vector.svg",
         "type": "image/svg+xml",
         "sizes": "512x512"
       },
       {
-        "src": "/assets/img/icons-192.png",
+        "src": "assets/img/icons-192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/assets/img/icons-512.png",
+        "src": "assets/img/icons-512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
@@ -29,13 +29,13 @@
     "description": "Weather forecast information",
     "screenshots": [
       {
-        "src": "/assets/img/screenshot1.png",
+        "src": "assets/img/screenshot1.png",
         "type": "image/png",
         "sizes": "540x720",
         "form_factor": "narrow"
       },
       {
-        "src": "/assets/img/screenshot2.png",
+        "src": "assets/img/screenshot2.png",
         "type": "image/png",
         "sizes": "720x540",
         "form_factor": "wide"

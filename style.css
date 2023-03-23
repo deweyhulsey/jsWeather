@@ -156,7 +156,7 @@ body {
     right: -10px;
     height: 70px;
     width: 70px;
-    content: url('/assets/img/svg/sun_with_face_color.svg');
+    content: url('assets/img/svg/sun_with_face_color.svg');
 }
 
 .forecast.night {
@@ -170,7 +170,7 @@ body {
     right: -5px;
     height: 60px;
     width: 60px;
-    content: url('/assets/img/svg/full_moon_face_color.svg');
+    content: url('assets/img/svg/full_moon_face_color.svg');
 }
 
 .forecast .icon {
@@ -240,19 +240,19 @@ details[open] summary::marker {
 }
 
 .conditions .time::before {
-  content: url('/assets/img/svg/calendar_color.svg');
+  content: url('assets/img/svg/calendar_color.svg');
 }
 .conditions .temperature::before {
-  content: url('/assets/img/svg/thermometer_color.svg');
+  content: url('assets/img/svg/thermometer_color.svg');
 }
 .conditions .precipitation::before {
-  content: url('/assets/img/svg/droplet_color.svg');
+  content: url('assets/img/svg/droplet_color.svg');
 }
 .conditions .wind::before {
-  content: url('/assets/img/svg/dashing_away_color.svg');
+  content: url('assets/img/svg/dashing_away_color.svg');
 }
 .conditions .humidity::before {
-  content: url('/assets/img/svg/hot_face_color.svg');
+  content: url('assets/img/svg/hot_face_color.svg');
 }
 
 @media screen and (max-width: 425px) {
