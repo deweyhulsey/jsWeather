@@ -79,5 +79,19 @@ async function renderPage(target) {
 
 window.addEventListener('load', (event) => {
   const target = document.getElementById('target');
-  renderPage(target);
+  const button = document.getElementById('getWeather');
+  button.addEventListener('click', (event) => {
+    renderPage(target);
+  });
+});
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  // e.preventDefault();
+  // Stash the event so it can be triggered later.
+  // deferredPrompt = e;
+  // Update UI notify the user they can install the PWA
+  // showInstallPromotion();
+  // Optionally, send analytics event that PWA install promo was shown.
+  console.log(`'beforeinstallprompt' event was fired.`);
 });
