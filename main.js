@@ -53,7 +53,7 @@ function showForecast(days, hourlyForecast) {
     const nameShort = (currentDay == 'this') ? 'today' : currentDay;
     const classList = nameShort + ((isDay == true) ? ' day' : ' night');
     const hourly = getHourly(day.startTime, day.endTime, hourlyForecast);
-    console.log(hourly);
+    // console.log(hourly);
     return  `
           <div class="forecast-container">
             <div id="${num}" class="forecast ${classList}">

@@ -128,6 +128,10 @@ body {
   scroll-snap-type: x mandatory;
 }
 
+.forecast-container::-webkit-scrollbar {
+  display: none;
+}
+
 .forecast {
   position: relative;
   padding: var(--spacing-normal);
