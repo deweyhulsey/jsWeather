@@ -117,9 +117,6 @@ body {
   margin: var(--spacing-normal) auto;
 }
 
-#forecasts {
-}
-
 .forecast-container {
   display: grid;
   grid-template-columns: 100vw 100vw;
@@ -132,7 +129,29 @@ body {
   display: none;
 }
 
+.forecast::before {
+  position: absolute;
+  top: 0;
+  left: -25px;
+  height: 80px;
+  width: 80px;
+}
+
+.forecast.day::before {
+    content: url('img/svg/sun_with_face_color.svg');
+}
+
+.forecast.night::before {
+    content: url('img/svg/full_moon_face_color.svg');
+}
+
+.forecast.hourly::before {
+  display: none;
+}
+
 .forecast {
+  background-color: var(--bg-normal);
+  color: var(--txt-color);
   position: relative;
   padding: var(--spacing-normal);
   margin: var(--spacing-light);
@@ -140,11 +159,33 @@ body {
   box-shadow: var(--light-shadow);
   scroll-snap-align: center;
   scroll-snap-stop: normal;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 50px auto auto;
+  column-gap: var(--spacing-light);
+  row-gap: var(--spacing-light);
+}
+
+.title, .time, .date {
+  align-self: center;
+  font-weight: var(--bold);
+
+}
+
+.title {
+  padding-left: 50px;
+  grid-column: span 2;
+  font-size: 1.5rem;
+}
+.date {
+  grid-column: span 2;
+  text-align: center;
 }
 
 .forecast.hourly {
-  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
 
 }
 
@@ -158,108 +199,28 @@ body {
 
 }
 
-.forecast h3 {
-    font-size: 2rem;
-}
-
-.forecast.day .conditions > div {
-    background-color: var(--day-bg-light);
-}
-
-.forecast.night .conditions > div {
-    background-color: var(--night-bg-light);
-}
-
-.forecast.day {
-    color: var(--day-txt-color);
-    background-color: var(--day-bg-color);
-}
-
-
-
-.forecast.hourly.day::after {
-    position: absolute;
-    top: var(--spacing-light);
-    left: -60px;
-    height: 80px;
-    width: 80px;
-    content: url('img/svg/sun_with_face_color.svg');
-}
-
-.forecast.night {
-    color: var(--night-txt-color);
-    background-color: var(--night-bg-color);
-}
-
-.forecast.hourly.night::after {
-    position: absolute;
-    top: var(--spacing-light);
-    left: -60px;
-    height: 80px;
-    width: 80px;
-    content: url('img/svg/full_moon_face_color.svg');
-}
-
-.day .icon {
-    border: solid 3px var(--day-bg-light);
-}
-
-.night .icon {
-    border: solid 3px var(--night-bg-light);
-}
-
-details {
-    position: relative;
-    border-radius: var(--rounded-radius);
-    font-weight: var(--bold);
-}
-
-details p {
-    padding: var(--spacing-light);
-    font-size: 0.9rem;
-    font-weight: 400;
-}
-summary {
-    border-radius: var(--rounded-radius);
-    padding: var(--spacing-light);
-    margin-top: var(--spacing-light) ;
-}
-
-summary::marker {
-    content: '⬇️';
-}
-
-details[open] summary::marker {
-    content: '⬆️';
-}
-
-.day details {
-    background-color: var(--day-bg-light);
-}
-
-.night details {
-    background-color: var(--night-bg-light);
-}
-
-
 
 .conditions {
+  grid-column: span 4;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  justify-content: end;
   column-gap: var(--spacing-light);
-  row-gap: var(--spacing-light);
+  margin-top: var(--spacing-normal);
 }
 .conditions .date, .conditions .time {
   grid-column: span 2;
 }
 
 .conditions > div {
+  grid-column: span 1;
+  align-self: stretch;
+
   position: relative;
   border-radius: var(--rounded-radius);
   font-size: 1rem;
+  background-color: var(--bg-light);
   padding: var(--spacing-light);
-  padding-top: 40px;
+  padding-top: 80px;
   font-weight: var(--bold);
   text-align: center;;
 }
@@ -267,11 +228,11 @@ details[open] summary::marker {
 .conditions > div::before {
   position: absolute;
   display: block;
-  top: -5px;
+  top: var(--spacing-normal);
   left: 50%;
   transform: translateX(-50%);
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 100%;
 }
 
@@ -290,6 +251,35 @@ details[open] summary::marker {
 .conditions .humidity::before {
   content: url('img/svg/hot_face_color.svg');
 }
+
+details {
+  grid-column: span 4;
+  align-self: end;
+  border-radius: var(--rounded-radius);
+  font-weight: var(--bold);
+  background-color: var(--bg-light);
+}
+
+details p {
+  padding: var(--spacing-light);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+details[open] summary::marker {
+content: '⬆️';
+}
+
+summary {
+  border-radius: var(--rounded-radius);
+  padding: var(--spacing-light);
+  margin-top: var(--spacing-light) ;
+}
+
+summary::marker {
+  content: '⬇️';
+}
+
 
 @media screen and (max-width: 425px) {
     body {padding: 0;}

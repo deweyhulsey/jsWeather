@@ -56,10 +56,9 @@ function showForecast(days, hourlyForecast) {
     return  `
           <div class="forecast-container">
             <div id="${num}" class="forecast ${classList}">
-              <h3>${name}</h3>
+              <div class="title">${name}</div>
+              <div class="date">${date}<br />${timeStart} to ${timeEnd}</div>
               <div class="conditions">
-                <div class="date">${date}</div>
-                <div class="time">${timeStart} - ${timeEnd}</div>
                 <div class="temperature">${temp.f + ' / ' + temp.c}</div>
                 <div class="precipitation">${precipitation}</div>
                 <div class="wind">${windSpeed + ' ' + windDirection}</div>
