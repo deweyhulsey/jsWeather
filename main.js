@@ -64,6 +64,7 @@ function showForecast(days, hourlyForecast) {
     const forecastClassList = toForecastClasses(day.shortForecast);
     const dayClassList = nameShort + ((isDay == true) ? ' day' : ' night');
     const hourly = getHourly(day.startTime, day.endTime, hourlyForecast);
+    console.log(hourly);
 
     return  `
           <div class="forecast-container">
@@ -95,8 +96,9 @@ function showHourly(hourly) {
     const timeEnd = toTime(hour.endTime);
     const shortForecast = hour.shortForecast;
     const temp = toTemp(hour.temperature);
+    const forecastClasses = toForecastClasses(hour.shortForecast);
     return  `
-            <div class="hour">
+            <div class="hour ${forecastClasses}">
               <h4>${temp.f} / ${temp.c}</h4>
               <small>${timeStart}</small>
             </div>
