@@ -1,11 +1,9 @@
+import { toDateTime, toTime, toDate, toTemp } from './helpers.js';
+
 async function getJson(url) {
   const request = await fetch(url);
   const response = await request.json();
   return await response;
-}
-
-function localeTime(time) {
-  return new Date(time).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
 }
 
 function getLocation() {
@@ -27,10 +25,11 @@ async function getForecasts() { // forecast, forecastGridData, forecastHourly, f
   const request = await getJson(`https://api.weather.gov/points/${coords.latitude},${coords.longitude}`);
   const forecastWeekly = await getJson(request.properties.forecast);
   const forecastHourly = await getJson(request.properties.forecastHourly);
-  const forecastGridData = await getJson(request.properties.forecastGridData);
-  const forecastOffice = await getJson(request.properties.forecastOffice);
-  const forecastZone = await getJson(request.properties.forecastZone);
-  return {coords, forecastWeekly, forecastHourly, forecastGridData, forecastOffice, forecastZone};
+  // const forecastGridData = await getJson(request.properties.forecastGridData);
+  // const forecastOffice = await getJson(request.properties.forecastOffice);
+  // const forecastZone = await getJson(request.properties.forecastZone);
+  // return {coords, forecastWeekly, forecastHourly, forecastGridData, forecastOffice, forecastZone};
+  return { forecastWeekly, forecastHourly }
 }
 
 function showForecast(days, hourlyForecast) {
@@ -39,14 +38,14 @@ function showForecast(days, hourlyForecast) {
     const num = day.number;
     const details = day.detailedForecast;
     const short = day.shortForecast;
-    const timeStart = localeTime(day.startTime);
-    const timeEnd = localeTime(day.endTime);
+    const date = toDate(day.startTime);
+    const timeStart = toTime(day.startTime);
+    const timeEnd = toTime(day.endTime);
     const isDay = day.isDaytime;
     const icon = day.icon;
     const precipitation = (day.probabilityOfPrecipitation.value === null) ? 0 + '%' : day.probabilityOfPrecipitation.value + '%';
     const humidity = (day.relativeHumidity.value === null) ? 0 + '%' : day.relativeHumidity.value + '%';
-    const tempF = day.temperature + 'F';
-    const tempC = ((day.temperature - 32) * 5/9).toFixed(1) + 'C';
+    const temp = toTemp(day.temperature);
     const windDirection = day.windDirection;
     const windSpeed = day.windSpeed;
     const currentDay = (day.name.split(' '))[0].toLowerCase();
@@ -59,12 +58,12 @@ function showForecast(days, hourlyForecast) {
             <div id="${num}" class="forecast ${classList}">
               <h3>${name}</h3>
               <div class="conditions">
+                <div class="date">${date}</div>
                 <div class="time">${timeStart} - ${timeEnd}</div>
-                <div class="temperature">${tempF + ' / ' + tempC}</div>
+                <div class="temperature">${temp.f + ' / ' + temp.c}</div>
                 <div class="precipitation">${precipitation}</div>
                 <div class="wind">${windSpeed + ' ' + windDirection}</div>
                 <div class="humidity">${humidity}</div>
-                <img class="icon" src="${icon}" />
               </div>
               <details>
                 <summary>${short}</summary>
@@ -81,13 +80,13 @@ function showForecast(days, hourlyForecast) {
 
 function showHourly(hourly) {
   return hourly.map(hour => {
-    const timeStart = new Date(hour.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    const timeEnd = new Date(hour.endTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const timeStart = toTime(hour.startTime);
+    const timeEnd = toTime(hour.endTime);
     const shortForecast = hour.shortForecast;
-    const temp = hour.temperature + 'F';
+    const temp = toTemp(hour.temperature);
     return  `
             <div class="hour">
-              <h3>${temp}</h3>
+              <h4>${temp.f} / ${temp.c}</h4>
               <small>${timeStart}</small>
             </div>
             `;

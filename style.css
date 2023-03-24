@@ -162,25 +162,12 @@ body {
     font-size: 2rem;
 }
 
-.forecast .conditions > div {
-    display: inline-block;
-    margin: 0.2rem;
-    padding: 0.3rem;
-    border-radius: var(--rounded-radius);
-    font-size: 0.9rem;
-    font-weight: var(--bold);
-}
-
 .forecast.day .conditions > div {
     background-color: var(--day-bg-light);
 }
 
 .forecast.night .conditions > div {
     background-color: var(--night-bg-light);
-}
-
-.conditions {
-    margin-right: 80px;
 }
 
 .forecast.day {
@@ -213,16 +200,6 @@ body {
     content: url('img/svg/full_moon_face_color.svg');
 }
 
-.forecast .icon {
-    height: 80px;
-    width: 80px;
-    position: absolute;
-    top: var(--spacing-light);
-    right: var(--spacing-light);
-    border-radius: 100%;
-    /* box-shadow: var(--light-shadow); */
-}
-
 .day .icon {
     border: solid 3px var(--day-bg-light);
 }
@@ -245,7 +222,7 @@ details p {
 summary {
     border-radius: var(--rounded-radius);
     padding: var(--spacing-light);
-    margin-top: var(--spacing-normal) ;
+    margin-top: var(--spacing-light) ;
 }
 
 summary::marker {
@@ -264,19 +241,38 @@ details[open] summary::marker {
     background-color: var(--night-bg-light);
 }
 
+
+
+.conditions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: end;
+  column-gap: var(--spacing-light);
+  row-gap: var(--spacing-light);
+}
+.conditions .date, .conditions .time {
+  grid-column: span 2;
+}
+
 .conditions > div {
   position: relative;
-  padding-left: 23px !important;
+  border-radius: var(--rounded-radius);
+  font-size: 1rem;
+  padding: var(--spacing-light);
+  padding-top: 40px;
+  font-weight: var(--bold);
+  text-align: center;;
 }
 
 .conditions > div::before {
   position: absolute;
-  display: inline-block;
-  top: 50%;
-  left: -6px;
-  transform: translateY(-50%);
-  height: 22px;
-  width: 22px;
+  display: block;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
 }
 
 .conditions .time::before {
