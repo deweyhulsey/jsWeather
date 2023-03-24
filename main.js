@@ -32,6 +32,17 @@ async function getForecasts() { // forecast, forecastGridData, forecastHourly, f
   return { forecastWeekly, forecastHourly }
 }
 
+function toForecastClasses(forecast) {
+  let forecastClasses = forecast.toLowerCase().split(' ');
+  forecastClasses.forEach((element, index, array) => {
+    const removals = ['chance', 'and', 'then', 'slight'];
+    if(removals.includes(element)) {
+      forecastClasses.splice(index, 1);
+    }
+  });
+  return forecastClasses.join(' ');
+}
+
 function showForecast(days, hourlyForecast) {
   return days.map(day => {
     const name = day.name;
@@ -50,12 +61,13 @@ function showForecast(days, hourlyForecast) {
     const windSpeed = day.windSpeed;
     const currentDay = (day.name.split(' '))[0].toLowerCase();
     const nameShort = (currentDay == 'this') ? 'today' : currentDay;
-    const classList = nameShort + ((isDay == true) ? ' day' : ' night');
+    const forecastClassList = toForecastClasses(day.shortForecast);
+    const dayClassList = nameShort + ((isDay == true) ? ' day' : ' night');
     const hourly = getHourly(day.startTime, day.endTime, hourlyForecast);
-    // console.log(hourly);
+
     return  `
           <div class="forecast-container">
-            <div id="${num}" class="forecast ${classList}">
+            <div id="${num}" class="forecast ${dayClassList} ${forecastClassList}">
               <div class="title">${name}</div>
               <div class="date">${date}<br />${timeStart} to ${timeEnd}</div>
               <div class="conditions">
@@ -69,7 +81,7 @@ function showForecast(days, hourlyForecast) {
                 <p class="details">${details}</p>
               </details>
             </div>
-            <div id="${num}" class="forecast hourly ${classList}">
+            <div id="${num}" class="forecast hourly ${dayClassList}">
             `+ showHourly(hourly) +`
             </div>
           </div>
