@@ -53,7 +53,7 @@ function showForecast(days, hourlyForecast) {
     const timeStart = toTime(day.startTime);
     const timeEnd = toTime(day.endTime);
     const isDay = day.isDaytime;
-    const icon = day.icon;
+    // const icon = day.icon;
     const precipitation = (day.probabilityOfPrecipitation.value === null) ? 0 + '%' : day.probabilityOfPrecipitation.value + '%';
     const humidity = (day.relativeHumidity.value === null) ? 0 + '%' : day.relativeHumidity.value + '%';
     const temp = toTemp(day.temperature);
@@ -99,8 +99,10 @@ function showHourly(hourly) {
     const forecastClasses = toForecastClasses(hour.shortForecast);
     return  `
             <div class="hour ${forecastClasses}">
-              <h4>${temp.f} / ${temp.c}</h4>
+              <h4>${shortForecast}</h4>
+              <small>${temp.f} / ${temp.c}</small>
               <small>${timeStart}</small>
+              <small>${hour.windDirection} ${hour.windSpeed}</small>
             </div>
             `;
   }).join('');

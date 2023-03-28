@@ -7,7 +7,11 @@ function toDate(time) {
 }
 
 function toTime(time) {
-    return new Date(time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    let timeString = new Date(time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    if(timeString.substring(0,1) == 0) {
+        return timeString.substring(1);
+    }
+    return timeString;
 }
 
 function toTemp(temperature) {

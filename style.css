@@ -216,7 +216,10 @@ body {
   background-color: var(--bg-light);
   margin: var(--spacing-light);
   padding: var(--spacing-light);
+}
 
+.hourly small {
+  display: block;
 }
 
 
