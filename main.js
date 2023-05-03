@@ -140,49 +140,49 @@ window.addEventListener('load', (event) => {
   }
   const target = document.getElementById('target');
   const button = document.getElementById('getWeather');
-  const getLocationButton = document.getElementById('getLocation');
-  const dbOpenRquest = window.indexedDB.open('weatherProfile');
-  let db;
+  // const getLocationButton = document.getElementById('getLocation');
+  // const dbOpenRquest = window.indexedDB.open('weatherProfile');
+  // let db;
 
-  dbOpenRquest.onerror = (event) => {
-    // note.innerHTML += "<li>Error loading database.</li>";
-    console.log('Error with db: ' + event);
-  };
+  // dbOpenRquest.onerror = (event) => {
+  //   // note.innerHTML += "<li>Error loading database.</li>";
+  //   console.log('Error with db: ' + event);
+  // };
 
-  dbOpenRquest.onsuccess = (event) => {
-    // note.innerHTML += "<li>Database initialized.</li>";
-    console.log('Database initialized');
+  // dbOpenRquest.onsuccess = (event) => {
+  //   // note.innerHTML += "<li>Database initialized.</li>";
+  //   console.log('Database initialized');
 
-    // store the result of opening the database in the db
-    // variable. This is used a lot later on, for opening
-    // transactions and suchlike.
-    db = dbOpenRquest.result;
-  };
+  //   // store the result of opening the database in the db
+  //   // variable. This is used a lot later on, for opening
+  //   // transactions and suchlike.
+  //   db = dbOpenRquest.result;
+  // };
 
   // New database needs to be created
-  dbOpenRquest.onupgradeneeded = (event) => {
-    db = event.target.result;
+  // dbOpenRquest.onupgradeneeded = (event) => {
+  //   db = event.target.result;
 
-    db.onerror = (event) => {
-      // note.appendChild(createListItem('Error loading database.'));
-      console.log('Error loading database.')
-    };
+  //   db.onerror = (event) => {
+  //     // note.appendChild(createListItem('Error loading database.'));
+  //     console.log('Error loading database.')
+  //   };
 
-    // Create an objectStore for this database
-    const objectStore = db.createObjectStore('weatherProfile', { keyPath: 'homeLocation' });
+  //   // Create an objectStore for this database
+  //   const objectStore = db.createObjectStore('weatherProfile', { keyPath: 'homeLocation' });
 
-    // Define what data items the objectStore will contain
-    objectStore.createIndex('longitude', 'longitude', { unique: false });
-    objectStore.createIndex('latitude', 'latitude', { unique: false });
+  //   // Define what data items the objectStore will contain
+  //   objectStore.createIndex('longitude', 'longitude', { unique: false });
+  //   objectStore.createIndex('latitude', 'latitude', { unique: false });
 
-    // note.appendChild(createListItem('Object store created.'));
-    console.log('Object store created.');
-  };
+  //   // note.appendChild(createListItem('Object store created.'));
+  //   console.log('Object store created.');
+  // };
 
-  getLocationButton.addEventListener('click', async (event) => {
-    // coords = await getLocation();
-    console.log(coords);
-  });
+  // getLocationButton.addEventListener('click', async (event) => {
+  //   // coords = await getLocation();
+  //   console.log(coords);
+  // });
 
   
 
