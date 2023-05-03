@@ -29,6 +29,7 @@ async function getForecasts() { // forecast, forecastGridData, forecastHourly, f
   // const forecastOffice = await getJson(request.properties.forecastOffice);
   // const forecastZone = await getJson(request.properties.forecastZone);
   // return {coords, forecastWeekly, forecastHourly, forecastGridData, forecastOffice, forecastZone};
+  // console.log(request);
   return { forecastWeekly, forecastHourly }
 }
 
@@ -64,7 +65,6 @@ function showForecast(days, hourlyForecast) {
     const forecastClassList = toForecastClasses(day.shortForecast);
     const dayClassList = nameShort + ((isDay == true) ? ' day' : ' night');
     const hourly = getHourly(day.startTime, day.endTime, hourlyForecast);
-    console.log(hourly);
 
     return  `
           <div class="forecast-container">
@@ -134,8 +134,58 @@ async function renderPage(target) {
 }
 
 window.addEventListener('load', (event) => {
+  if (!('indexedDB' in window)) {
+    console.log("This browser doesn't support IndexedDB.");
+    return;
+  }
   const target = document.getElementById('target');
   const button = document.getElementById('getWeather');
+  const getLocationButton = document.getElementById('getLocation');
+  const dbOpenRquest = window.indexedDB.open('weatherProfile');
+  let db;
+
+  dbOpenRquest.onerror = (event) => {
+    // note.innerHTML += "<li>Error loading database.</li>";
+    console.log('Error with db: ' + event);
+  };
+
+  dbOpenRquest.onsuccess = (event) => {
+    // note.innerHTML += "<li>Database initialized.</li>";
+    console.log('Database initialized');
+
+    // store the result of opening the database in the db
+    // variable. This is used a lot later on, for opening
+    // transactions and suchlike.
+    db = dbOpenRquest.result;
+  };
+
+  // New database needs to be created
+  dbOpenRquest.onupgradeneeded = (event) => {
+    db = event.target.result;
+
+    db.onerror = (event) => {
+      // note.appendChild(createListItem('Error loading database.'));
+      console.log('Error loading database.')
+    };
+
+    // Create an objectStore for this database
+    const objectStore = db.createObjectStore('weatherProfile', { keyPath: 'homeLocation' });
+
+    // Define what data items the objectStore will contain
+    objectStore.createIndex('longitude', 'longitude', { unique: false });
+    objectStore.createIndex('latitude', 'latitude', { unique: false });
+
+    // note.appendChild(createListItem('Object store created.'));
+    console.log('Object store created.');
+  };
+
+  getLocationButton.addEventListener('click', async (event) => {
+    // coords = await getLocation();
+    console.log(coords);
+  });
+
+  
+
   button.addEventListener('click', (event) => {
     renderPage(target);
   });
